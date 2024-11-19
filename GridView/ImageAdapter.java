@@ -1,42 +1,49 @@
-package com.example.gridviewimage;
+package com.example.gridview1;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 public class ImageAdapter extends BaseAdapter {
-    Context mcontext;
-    int img[];
 
-    public ImageAdapter(android.content.Context context, int[] imageslist) {
-        mcontext = context;
-        img = imageslist;
+    Context context;
+    int[] img;
+
+    public ImageAdapter(Context context, int[] img) {
+        this.context = context;
+        this.img = img;
     }
 
+    @Override
     public int getCount() {
         return img.length;
     }
 
-    public Object getItem(int position) {
+    @Override
+    public Object getItem(int i) {
         return null;
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(int i) {
         return 0;
     }
 
-    public View getView(int position, View convertView, android.view.ViewGroup parent) {
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView iv;
-        if (convertView == null) {
-            iv = new ImageView(mcontext);
-            iv.setLayoutParams(new GridView.LayoutParams(200, 200));
+        if(view==null){
+            iv= new ImageView(context);
+            iv.setLayoutParams(new ViewGroup.LayoutParams(200,200));
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } else {
-            iv = (ImageView) convertView;
         }
-        iv.setImageResource(img[position]);
+        else{
+            iv=(ImageView) view;
+        }
+        iv.setImageResource(img[i]);
         return iv;
     }
 }
