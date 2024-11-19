@@ -1,132 +1,203 @@
-package com.example.gcalc;
+package com.example.gridcalc;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    TextView Result;
-    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonplus, buttonminus, buttondiv, buttonmulti, buttonres, clear;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-    private String input = "";
-    private String operation = "";
-    private double firstValue = 0;
-    private boolean isNewOp = true;
+public class MainActivity extends AppCompatActivity {
+
+    TextView inp,result;
+    Button one,two,three,four,five,six,seven,eight,nine,zero;
+    Button plus,minus,div,multi,clear,equalto;
+    private static final char Addition='+';
+    private static final char Subtraction='-';
+    private static final char Multiplication='*';
+    private static final char Division='/';
+
+    private char currentop;
+    private double firstvalue;
+    private double secondvalue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        Result = findViewById(R.id.Result);
-        button0 = findViewById(R.id.button0);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-        button4 = findViewById(R.id.button4);
-        button5 = findViewById(R.id.button5);
-        button6 = findViewById(R.id.button6);
-        button7 = findViewById(R.id.button7);
-        button8 = findViewById(R.id.button8);
-        button9 = findViewById(R.id.button9);
-        buttonplus = findViewById(R.id.buttonplus);
-        buttonminus = findViewById(R.id.buttonminus);
-        buttonmulti = findViewById(R.id.buttonmulti);
-        buttondiv = findViewById(R.id.buttondiv);
-        buttonres = findViewById(R.id.buttonres);
-        clear = findViewById(R.id.clear);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        inp=findViewById(R.id.inp);
+        result=findViewById(R.id.result);
 
-        Buttonclick();
-    }
+        one=findViewById(R.id.one);
+        two=findViewById(R.id.two);
+        three=findViewById(R.id.three);
+        four=findViewById(R.id.four);
+        five=findViewById(R.id.five);
+        six=findViewById(R.id.six);
+        seven=findViewById(R.id.seven);
+        eight=findViewById(R.id.eight);
+        nine=findViewById(R.id.nine);
+        zero=findViewById(R.id.zero);
 
-    private void Buttonclick() {
-        button0.setOnClickListener(v -> TakeInput("0"));
-        button1.setOnClickListener(v -> TakeInput("1"));
-        button2.setOnClickListener(v -> TakeInput("2"));
-        button3.setOnClickListener(v -> TakeInput("3"));
-        button4.setOnClickListener(v -> TakeInput("4"));
-        button5.setOnClickListener(v -> TakeInput("5"));
-        button6.setOnClickListener(v -> TakeInput("6"));
-        button7.setOnClickListener(v -> TakeInput("7"));
-        button8.setOnClickListener(v -> TakeInput("8"));
-        button9.setOnClickListener(v -> TakeInput("9"));
+        plus=findViewById(R.id.plus);
+        minus=findViewById(R.id.minus);
+        div=findViewById(R.id.div);
+        multi=findViewById(R.id.multi);
+        clear=findViewById(R.id.clear);
+        equalto=findViewById(R.id.equalto);
 
-        buttonplus.setOnClickListener(view -> Operation("+"));
-        buttonminus.setOnClickListener(view -> Operation("-"));
-        buttonmulti.setOnClickListener(view -> Operation("*"));
-        buttondiv.setOnClickListener(view -> Operation("/"));
-        buttonres.setOnClickListener(view -> Calculate());
-        clear.setOnClickListener(v -> ClearInput());
-    }
-
-    private void TakeInput(String value) {
-        if (isNewOp) {
-            input = "";
-            isNewOp = false;
-        }
-        input += value;
-        Result.setText(getDisplayString());
-    }
-
-    private void Operation(String op) {
-        if (!input.isEmpty()) {
-            firstValue = Double.parseDouble(input);
-            operation = op;
-            input = "";
-            Result.setText(getDisplayString());
-            isNewOp = true;
-        }
-    }
-
-    private void Calculate() {
-        if (!input.isEmpty() && !operation.isEmpty()) {
-            double secondValue = Double.parseDouble(input);
-            double result = 0;
-
-            switch (operation) {
-                case "+":
-                    result = firstValue + secondValue;
-                    break;
-                case "-":
-                    result = firstValue - secondValue;
-                    break;
-                case "*":
-                    result = firstValue * secondValue;
-                    break;
-                case "/":
-                    if (secondValue != 0) {
-                        result = firstValue / secondValue;
-                    } else {
-                        Result.setText("Error");
-                        return;
-                    }
-                    break;
+        one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("1");
             }
+        });
+        two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("2");
+            }
+        });
+        three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("3");
+            }
+        });
+        four.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("4");
+            }
+        });
+        five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("5");
+            }
+        });
+        six.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("6");
+            }
+        });
+        seven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("7");
+            }
+        });
+        eight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("8");
+            }
+        });
+        nine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("9");
+            }
+        });
+        zero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inp.append("0");
+            }
+        });
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstvalue=Double.parseDouble(inp.getText().toString());
+                currentop=Addition;
+                result.setText(firstvalue+"+");
+                inp.setText(null);
+            }
+        });
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstvalue=Double.parseDouble(inp.getText().toString());
+                currentop=Subtraction;
+                result.setText(firstvalue+"-");
+                inp.setText(null);
+            }
+        });
+        div.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstvalue=Double.parseDouble(inp.getText().toString());
+                currentop=Division;
+                result.setText(firstvalue+"/");
+                inp.setText(null);
+            }
+        });
+        multi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstvalue=Double.parseDouble(inp.getText().toString());
+                currentop=Multiplication;
+                result.setText(firstvalue+"*");
+                inp.setText(null);
+            }
+        });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            firstvalue=Double.NaN;
+            secondvalue=Double.NaN;
+            inp.setText(null);
+            result.setText(null);
+            }
+        });
 
-            Result.setText(firstValue + " " + operation + " " + secondValue + " = " + result);
-            input = "";
-            isNewOp = true;
-            operation = "";
-        }
+        equalto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AllCalculation();
+                result.setText(String.valueOf(firstvalue));
+                firstvalue=Double.NaN;
+                currentop='\0';
+            }
+        });
+
+
     }
-
-    private String getDisplayString() {
-
-        String display = "";
-        if (!input.isEmpty()) {
-            display += input;
+    private void AllCalculation(){
+        if(!Double.isNaN(firstvalue)){
+            secondvalue=Double.parseDouble(inp.getText().toString());
+            inp.setText(null);
+            if(currentop==Addition){
+                firstvalue=this.firstvalue+secondvalue;
+            }
+            else if (currentop==Subtraction) {
+                firstvalue=this.firstvalue-secondvalue;
+            }
+            else if (currentop==Multiplication) {
+                firstvalue=this.firstvalue*secondvalue;
+            }
+            else if (currentop==Division) {
+                firstvalue=this.firstvalue/secondvalue;
+            }
+            else {
+                try {
+                    firstvalue=Double.parseDouble(inp.getText().toString());
+                } catch (Exception e) {
+                }
+            }
         }
-        if (!operation.isEmpty()) {
-            display += " " + operation;
-        }
-        return display;
-    }
-
-    private void ClearInput() {
-        input = "";
-        operation = "";
-        firstValue = 0;
-        isNewOp = true;
-        Result.setText("0");
     }
 }
